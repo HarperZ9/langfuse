@@ -463,7 +463,7 @@ describe("createAgUiStream", () => {
     const { Agent } = await import("@mastra/core/agent");
     expect(Agent).toHaveBeenCalledWith(
       expect.objectContaining({
-        tools: {
+        tools: expect.objectContaining({
           langfuse_search: { server: "langfuse" },
           langfuseDocs_search: expect.objectContaining({
             server: "langfuseDocs",
@@ -472,7 +472,11 @@ describe("createAgUiStream", () => {
           langfuse_proposeRedirect: expect.objectContaining({
             id: "langfuse_proposeRedirect",
           }),
-        },
+        }),
+        skills: expect.arrayContaining([
+          expect.objectContaining({ name: "langfuse-error-analysis" }),
+          expect.objectContaining({ name: "langfuse-cli" }),
+        ]),
       }),
     );
     const agentConfig = vi.mocked(Agent).mock.calls[0]?.[0];

@@ -18,6 +18,7 @@ import type {
   InAppAgentTracingConfig,
 } from "@/src/ee/features/in-app-agent/server/instrumentation";
 import { createInAppAgentInstrumentation } from "@/src/ee/features/in-app-agent/server/instrumentation";
+import { LANGFUSE_IN_APP_AGENT_SKILLS } from "@/src/ee/features/in-app-agent/server/skills";
 import { createRedirectActionTool } from "@/src/ee/features/in-app-agent/server/tools";
 import { DEFAULT_SIDEBAR_HIDDEN_ENVIRONMENTS } from "@/src/features/filters/constants/internal-environments";
 import { logger } from "@langfuse/shared/src/server";
@@ -602,6 +603,7 @@ async function createMastraAdapter(params: {
       model: bedrock(
         params.options.awsBedrock.modelId as Parameters<typeof bedrock>[0],
       ),
+      skills: LANGFUSE_IN_APP_AGENT_SKILLS,
       tools,
       defaultOptions: {
         abortSignal: params.signal,
